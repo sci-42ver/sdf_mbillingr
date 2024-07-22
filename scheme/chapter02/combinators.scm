@@ -144,6 +144,7 @@
                 (fixed-arity? arity-g)))
     (if (fixed-arity? arity-f)
         (let ((n (procedure-arity-min arity-f)))
+          ;; This has better abstraction than sci-42ver/SDF_exercise_solution
           (let ((t (arity-add-fixed arity-g n)))
             (define (the-combination . args)
               (check-arity t (length args))
