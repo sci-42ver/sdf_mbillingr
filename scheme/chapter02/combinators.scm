@@ -52,6 +52,7 @@
       (cons (car lst)
             (list-insert (cdr lst) (- index 1) value))))
 
+;; This is wrong since the latter indices should be based on the original lst instead of lst after being inserted.
 (define (list-insert* lst indices values)
   (if (null? indices)
       lst
@@ -181,7 +182,7 @@
   (lambda args
     (let ((n (+ (length args) (length indices))))
       (lambda (f)
-        (assert (= (get-arity f) n))
+        (assert (= (procedure-arity-min (get-arity f)) n))
         (lambda x
           (apply f (list-insert* args indices x)))))))
 
@@ -249,3 +250,12 @@
 
 (display (((permute-arguments 1 2 0 3) (lambda (x y z w) (list 'foo x y z w))) 'a 'b 'c 'd))
 (newline)
+
+(define test_ca (((curry-arguments 1 2)
+                  'a 'b 'c)
+                  (lambda (x y z w a)
+                    (list 'foo x y z w a))))
+
+(test_ca
+ 'd 'e)
+'expect-value: '(foo a d b e c)
