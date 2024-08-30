@@ -1,3 +1,5 @@
+;; This is just one copy of the code base.
+
 #|
 This script is expected to be loaded into a REPL session prepared with
 the following steps
